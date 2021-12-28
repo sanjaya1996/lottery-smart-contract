@@ -15,6 +15,16 @@ contract Lottery {
         players.push(payable(msg.sender));
     }
 
+    function pickWinner() public restricted {
+        uint256 index = random() % players.length;
+        players[index].transfer(address(this).balance);
+        players = new address payable[](0);
+    }
+
+    function getPlayers() public view returns (address payable[] memory) {
+        return players;
+    }
+
     function random() private view returns (uint256) {
         return
             uint256(
@@ -24,18 +34,8 @@ contract Lottery {
             );
     }
 
-    function pickWinner() public restricted {
-        uint256 index = random() % players.length;
-        players[index].transfer(address(this).balance);
-        players = new address payable[](0);
-    }
-
     modifier restricted() {
         require(msg.sender == manager);
         _;
-    }
-
-    function getPlayers() public view returns (address payable[] memory) {
-        return players;
     }
 }
