@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "solc": "^0.8.11"
+    "@truffle/hdwallet-provider": "^2.0.0",
+    "dotenv": "^10.0.0",
+    "solc": "^0.8.11",
+    "web3": "^1.6.1"
   }
 }
