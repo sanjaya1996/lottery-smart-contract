@@ -58,14 +58,31 @@ describe('Lottery Contract', () => {
   });
 
   it('requires a minimum 0.01 of ether to enter', async () => {
+    let executed;
     try {
       await lottery.methods.enter().send({
         from: accounts[0],
         value: 0,
       });
-      assert(false);
+      executed = 'success';
     } catch (err) {
-      assert(err);
+      executed = 'fail';
     }
+
+    assert.equal('fail', executed);
+  });
+
+  it('only manager can call pickWinner', async () => {
+    let executed;
+    try {
+      await lottery.methods.pickWinner().send({
+        from: accounts[1],
+      });
+      executed = 'success';
+    } catch (err) {
+      executed = 'fail';
+    }
+
+    assert.equal('fail', executed);
   });
 });
